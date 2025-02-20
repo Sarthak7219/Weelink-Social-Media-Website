@@ -42,9 +42,11 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("userData", JSON.stringify(newUserData));
       navigate(`/${username}`);
     } else if (data.error) {
-      alert("Error reaching server!");
+      alert(data.error);
+      return;
     } else {
-      alert("Invalid username or password!");
+      alert("Something went wrong");
+      return;
     }
   };
 
