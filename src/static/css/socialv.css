@@ -12862,10 +12862,9 @@ body.sidebar-main .iq-menu-bt-sidebar .iq-menu-bt {
 .sign-in-detail {
   color: #fff;
   padding: 6.25rem;
-  height: 100vh;
 }
 .sign-in-page {
-  height: 100vh;
+  height: fit-content;
   background: #50b5ff;
   background: #50b5ff;
   background: -webkit-linear-gradient(-45deg, #50b5ff 0, #0076e5 100%);
@@ -12875,13 +12874,12 @@ body.sidebar-main .iq-menu-bt-sidebar .iq-menu-bt {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba($primary, 80)', endColorstr='#0076e5', GradientType=1);
   position: relative;
   overflow: hidden;
-  height: 100vh;
   width: 100%;
   margin: 0 auto;
-  padding: 0 auto;
+  padding: 0px auto;
 }
 .sign-in-page .container {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
@@ -12931,13 +12929,13 @@ body.sidebar-main .iq-menu-bt-sidebar .iq-menu-bt {
   text-decoration: none;
 }
 #container-inside {
-  position: relative;
-  min-width: 60rem;
-  max-width: 80rem;
+  position: absolute;
+  min-width: 100vw;
+  max-width: 100vw;
   height: auto;
-  min-height: 100%;
-  margin: 0 auto;
-  padding: 0 auto;
+  min-height: 100vh;
+  margin: 0px auto;
+  padding: 0px auto;
   overflow: visible;
 }
 #circle-small {

@@ -30,7 +30,7 @@ const SignUpPage = () => {
     <div className="sign-in-from">
       <h1 className="mb-0">Sign Up</h1>
       <p>Enter your details to register</p>
-      <form className="mt-4">
+      <form className="my-4">
         <div className="form-group">
           <label className="form-label" htmlFor="username">
             Username
