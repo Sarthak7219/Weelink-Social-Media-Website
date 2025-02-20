@@ -33,6 +33,8 @@ const UserPosts = ({ username, isOurProfile, profileImageURL, isHome }) => {
         alert(data.error);
       } else {
         setPosts((posts) => [data, ...posts]);
+        setPostImage(null);
+        setBody("");
       }
     } catch {
       alert("An error occurred while creating the post.");
