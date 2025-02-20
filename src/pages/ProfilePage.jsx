@@ -98,7 +98,13 @@ const ProfilePage = () => {
               <div className="user-detail text-center mb-3">
                 <div className="profile-img">
                   <img
-                    src={loading ? null : `${SERVER_URL}${profileImage}`}
+                    src={
+                      loading
+                        ? null
+                        : profileImage
+                        ? `${SERVER_URL}${profileImage}`
+                        : defaultImage
+                    }
                     alt="profile-img"
                     className="avatar-130 img-fluid"
                     style={{
@@ -135,15 +141,15 @@ const ProfilePage = () => {
                 {!isOurProfile && (
                   <div className="d-flex">
                     {following && (
-                      <a
-                        href="#"
+                      <Link
+                        to={`/chat/${username}/`}
                         className="btn btn-success d-block mt-3 me-3"
                         id="message-btn"
                         data-user-id="1"
                         style={{ color: "#fff" }}
                       >
                         Message
-                      </a>
+                      </Link>
                     )}
 
                     {following ? (
@@ -254,7 +260,11 @@ const ProfilePage = () => {
                       username={username}
                       isOurProfile={isOurProfile}
                       profileImageURL={
-                        loading ? null : `${SERVER_URL}${profileImage}`
+                        loading
+                          ? null
+                          : profileImage
+                          ? `${SERVER_URL}${profileImage}`
+                          : defaultImage
                       }
                       isHome={false}
                     />

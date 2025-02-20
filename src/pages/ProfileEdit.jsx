@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { update_user } from "../api/endpoints";
 import { useAuth } from "../contexts/useAuth";
 import { SERVER_URL } from "../constants/constants";
+import defaultImage from "/static/images/default_profile.jpeg";
 
 const ProfileEdit = () => {
   const { userData, setUserData } = useAuth();
@@ -95,7 +96,7 @@ const ProfileEdit = () => {
                               ? previewImageURL
                               : profileImage
                               ? `${SERVER_URL}${profileImage}`
-                              : null
+                              : defaultImage
                           }
                           alt="profile-pic"
                           style={{
