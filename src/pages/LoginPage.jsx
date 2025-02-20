@@ -8,6 +8,14 @@ const LoginPage = () => {
   const { auth_login } = useAuth();
 
   const handleLogin = () => {
+    if (!username.trim()) {
+      alert("Please enter your username");
+      return;
+    }
+    if (!password.trim()) {
+      alert("Please enter your password");
+      return;
+    }
     auth_login(username, password);
   };
 
@@ -19,7 +27,7 @@ const LoginPage = () => {
       <form className="mt-4">
         <div className="form-group">
           <label className="form-label" htmlFor="id_username">
-            Username
+            Username*
           </label>
           <input
             onChange={(e) => {
@@ -35,7 +43,7 @@ const LoginPage = () => {
         </div>
         <div className="form-group">
           <label className="form-label" htmlFor="id_password">
-            Password
+            Password*
           </label>
           <a href="#" className="float-end">
             Forgot password?

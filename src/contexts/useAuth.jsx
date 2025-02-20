@@ -15,8 +15,10 @@ export const AuthProvider = ({ children }) => {
 
   const check_auth = async () => {
     try {
-      await get_auth();
-      setAuth(true);
+      const data = await get_auth();
+      if (data.success) {
+        setAuth(true);
+      }
     } catch {
       setAuth(false);
     } finally {

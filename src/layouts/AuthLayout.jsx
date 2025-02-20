@@ -41,7 +41,10 @@ const AuthLayout = ({ children }) => {
                 </div>
               </div>
             </div>
-            <div className="col-md-6 bg-white pt-5 pt-5 pb-lg-0 pb-5">
+            <div
+              className="col-md-6 bg-white pt-5 pt-5 pb-lg-0 pb-5"
+              style={{ minHeight: "100vh" }}
+            >
               {children}
             </div>
           </div>

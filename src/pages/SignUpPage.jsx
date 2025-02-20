@@ -13,16 +13,42 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
+    if (!username.trim()) {
+      alert("Username cannot be empty");
+      return;
+    } else if (!password.trim()) {
+      alert("Please enter a password");
+      return;
+    } else if (!confirmPassword.trim()) {
+      alert("Please confirm your password");
+      return;
+    }
     if (password === confirmPassword) {
+      if (password.length < 5) {
+        alert("Password must have at least 5 characters");
+        return;
+      }
       try {
-        await register(username, email, firstName, lastName, password);
-        alert("Registration successful! Please login");
-        navigate("/login");
+        const data = await register(
+          username,
+          email,
+          firstName,
+          lastName,
+          password
+        );
+        if (data.error) {
+          alert(data.error);
+        } else {
+          alert("Registration successful! Please login");
+          navigate("/login");
+        }
       } catch {
         alert("Error registering user");
+        return;
       }
     } else {
       alert("Passwords do not match");
+      return;
     }
   };
 
@@ -33,7 +59,7 @@ const SignUpPage = () => {
       <form className="my-4">
         <div className="form-group">
           <label className="form-label" htmlFor="username">
-            Username
+            Username*
           </label>
           <input
             onChange={(e) => {
@@ -97,7 +123,7 @@ const SignUpPage = () => {
         </div>
         <div className="form-group">
           <label className="form-label" htmlFor="password1">
-            Password
+            Password*
           </label>
           <input
             onChange={(e) => {
@@ -113,7 +139,7 @@ const SignUpPage = () => {
         </div>
         <div className="form-group">
           <label className="form-label" htmlFor="password2">
-            Confirm Password
+            Confirm Password*
           </label>
           <input
             onChange={(e) => {
