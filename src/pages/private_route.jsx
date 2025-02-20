@@ -4,12 +4,11 @@ import { Navigate } from "react-router-dom";
 const PrivateRoute = ({ children }) => {
   const { auth, authLoading } = useAuth();
 
-  if (authLoading) {
-    return <p>Loading...</p>;
-  }
-
   if (auth) {
     return children;
+  }
+  if (authLoading) {
+    return <p>Loading...</p>;
   } else {
     return <Navigate to="/login" />;
   }

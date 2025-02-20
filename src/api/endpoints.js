@@ -4,7 +4,7 @@ import { SERVER_URL } from "../constants/constants";
 const BASE_URL = SERVER_URL;
 
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: `${BASE_URL}/api`,
   withCredentials: true,
 });
 
