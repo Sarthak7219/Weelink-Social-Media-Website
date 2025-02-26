@@ -6,7 +6,7 @@ import ProfileEdit from "./pages/ProfileEdit";
 import ChatRoom from "./pages/ChatRoom";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-import SetUsername from "./components/setUsername";
+import SetUsername from "./components/SetUsername";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/useAuth";
 import PrivateRoute from "./pages/private_route";
