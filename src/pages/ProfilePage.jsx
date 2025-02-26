@@ -8,6 +8,7 @@ import {
 import { SERVER_URL } from "../constants/constants";
 import UserPosts from "../components/UserPosts";
 import defaultImage from "/static/images/default_profile.jpeg";
+import UserPhotos from "../components/UserPhotos";
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -469,20 +470,7 @@ const ProfilePage = () => {
                         role="tabpanel"
                       >
                         <div className="card-body p-0">
-                          <div className="d-grid gap-2 d-grid-template-1fr-13 ">
-                            <div className="">
-                              <div className="user-images position-relative overflow-hidden">
-                                <a href="#">
-                                  <img
-                                    src={defaultImage}
-                                    className="img-fluid rounded"
-                                    alt="Responsive image"
-                                    style={{ objectFit: "cover" }}
-                                  />
-                                </a>
-                              </div>
-                            </div>
-                          </div>
+                          <UserPhotos username={username} />
                         </div>
                       </div>
                     </div>

@@ -10,6 +10,12 @@ const Post = ({ postData, isOurProfile, isHome, handleDeletePost }) => {
   const [commentsList, setCommentsList] = useState(postData.comments);
   const [comment, setComment] = useState("");
 
+  const handleKeyDown = (e, id) => {
+    if (e.key === "Enter") {
+      handlePostComment(id);
+    }
+  };
+
   const handlePostComment = async (id) => {
     if (!comment) {
       alert("Comment cannot be empty!");
@@ -165,11 +171,14 @@ const Post = ({ postData, isOurProfile, isHome, handleDeletePost }) => {
             >
               <ul className="post-comments list-inline p-0 m-0">
                 {commentsList.length > 0 ? (
-                  commentsList.map((comment) => (
-                    <li className="mb-3 d-flex justify-content-between align-items-center">
+                  commentsList.map((comment, index) => (
+                    <li
+                      key={index}
+                      className="mb-3 d-flex justify-content-between align-items-center"
+                    >
                       <div className="d-flex">
                         <div className="user-img">
-                          <Link to={`/profile/${comment.author}`}>
+                          <Link to={`/profile/${comment.author_name}`}>
                             <img
                               alt="userimg"
                               className="avatar-35 rounded-circle img-fluid"
@@ -178,7 +187,9 @@ const Post = ({ postData, isOurProfile, isHome, handleDeletePost }) => {
                           </Link>
                         </div>
                         <div className="comment-data-block ms-3">
-                          <h6 style={{ color: "#50b5ff" }}>{comment.author}</h6>
+                          <h6 style={{ color: "#50b5ff" }}>
+                            {comment.author_name}
+                          </h6>
                           <p className="mb-0">{comment.body}</p>
                         </div>
                       </div>
@@ -196,6 +207,9 @@ const Post = ({ postData, isOurProfile, isHome, handleDeletePost }) => {
                   onChange={(e) => {
                     setComment(e.target.value);
                   }}
+                  onKeyDown={(e) => {
+                    handleKeyDown(e, postData.id);
+                  }}
                   className="form-control rounded"
                   placeholder="Enter Your Comment"
                   type="text"
@@ -209,7 +223,7 @@ const Post = ({ postData, isOurProfile, isHome, handleDeletePost }) => {
                   className="send-message-icon"
                   style={{ margin: "0px", cursor: "pointer" }}
                 >
-                  <i class="ri-send-plane-line"></i>
+                  <i className="ri-send-plane-line"></i>
                 </div>
               </div>
             </div>

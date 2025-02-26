@@ -1,9 +1,10 @@
 import axios from "axios";
 import { SERVER_URL } from "../constants/constants";
+import { useAuth } from "../contexts/useAuth";
 
 const BASE_URL = SERVER_URL;
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: `${BASE_URL}/api`,
   withCredentials: true,
 });
@@ -65,8 +66,12 @@ export const register = async (
 };
 
 export const get_auth = async () => {
-  const response = await api.get("/authenticated/");
-  return response.data;
+  try {
+    const response = await api.get("/authenticated/");
+    return response.data;
+  } catch (error) {
+    return { success: false };
+  }
 };
 
 export const toggleFollow = async (username) => {
@@ -154,5 +159,42 @@ export const getOrCreateThread = async (profile_username) => {
 
 export const getDisplayThreads = async () => {
   const response = await api.get("/chat/display_threads/");
+  return response.data;
+};
+
+//Google Auth
+export const handleGoogleLogin = async (response) => {
+  const { google_login } = useAuth();
+  try {
+    const res = await api.post(
+      "/auth/google/",
+      { access_token: response.credential },
+      { withCredentials: true }
+    );
+    if (response.data.set_username) {
+      navigate("/set-username", { state: { email: response.data.email } });
+    } else {
+      google_login(res.data);
+    }
+  } catch (error) {
+    console.error("Google Login Error:", error);
+  }
+};
+
+export const handleSetUsername = async (email, username) => {
+  const response = await api.post("/set_username/", {
+    email: email,
+    username: username,
+  });
+  return response.data;
+};
+
+export const checkUsername = async (username) => {
+  const response = await api.post("/check_username/", { username: username });
+  return response.data;
+};
+
+export const getPhotos = async (username) => {
+  const response = await api.post("/get_photos/", { username: username });
   return response.data;
 };

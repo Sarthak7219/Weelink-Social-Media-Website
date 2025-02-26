@@ -1,23 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import LeftSidebar from "./components/LeftSidebar";
 import RightSidebar from "./components/RightSidebar";
 import defaultProfileImage from "/static/images/default_profile.jpeg";
 import { useAuth } from "./contexts/useAuth";
-import { SERVER_URL } from "./constants/constants";
 
 const Base = () => {
   const { userData } = useAuth();
-
+  const [messageBoxOpen, setMessageBoxOpen] = useState(true);
+  const handleMessageBoxOpen = () => {
+    setMessageBoxOpen((prev) => !prev);
+    console.log(messageBoxOpen);
+  };
   let profileImageURL = defaultProfileImage;
   if (userData && userData.profile_image != null) {
-    profileImageURL = `${SERVER_URL}${userData.profile_image}`;
+    profileImageURL = userData.profile_image;
   }
   return (
     <>
-      <LeftSidebar username={userData.username} />
-      <Navbar username={userData.username} profileImageURL={profileImageURL} />
-      <RightSidebar />
+      <LeftSidebar
+        username={userData.username}
+        handleMessageBoxOpen={handleMessageBoxOpen}
+      />
+      <Navbar
+        username={userData.username}
+        profileImageURL={profileImageURL}
+        handleMessageBoxOpen={handleMessageBoxOpen}
+      />
+      <RightSidebar messageBoxOpen={messageBoxOpen} />
     </>
   );
 };

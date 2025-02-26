@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const LeftSidebar = ({ username }) => {
+const LeftSidebar = ({ username, handleMessageBoxOpen }) => {
   return (
     <div className="iq-sidebar  sidebar-default ">
       <div id="sidebar-scrollbar">
@@ -21,7 +21,7 @@ const LeftSidebar = ({ username }) => {
             </li>
 
             <li className=" ">
-              <Link to="/chat/weelink_admin/" className=" ">
+              <Link to="#" className=" " onClick={handleMessageBoxOpen}>
                 <i className="ri-mail-line"></i>
                 <span>Messages</span>
                 <i className="ri-arrow-right-s-line iq-arrow-right"></i>

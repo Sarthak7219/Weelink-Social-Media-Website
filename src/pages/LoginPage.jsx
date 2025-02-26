@@ -1,13 +1,31 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/useAuth";
+import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { CLIENT_ID } from "../constants/constants";
 
-const LoginPage = () => {
+const LoginPage = ({ handleGoogleLogin }) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
   const { auth_login } = useAuth();
 
-  const handleLogin = () => {
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
+
+  const handleSuccess = async (respose) => {
+    await handleGoogleLogin(respose);
+  };
+
+  const handleLogin = async () => {
     if (!username.trim()) {
       alert("Please enter your username");
       return;
@@ -16,7 +34,20 @@ const LoginPage = () => {
       alert("Please enter your password");
       return;
     }
-    auth_login(username, password);
+    try {
+      setLoading(true);
+      const data = await auth_login(username, password, rememberMe);
+      if (data.success) {
+        navigate(`/${username}`);
+      } else if (data.error) {
+        alert(data.error);
+      }
+    } catch (error) {
+      alert(error);
+    } finally {
+      setLoading(false);
+      return;
+    }
   };
 
   return (
@@ -33,6 +64,7 @@ const LoginPage = () => {
             onChange={(e) => {
               setUsername(e.target.value);
             }}
+            onKeyDown={handleKeyDown}
             type="text"
             className="form-control mb-0"
             name="username"
@@ -52,6 +84,7 @@ const LoginPage = () => {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            onKeyDown={handleKeyDown}
             type="password"
             className="form-control mb-0"
             name="password"
@@ -67,6 +100,8 @@ const LoginPage = () => {
               className="form-check-input"
               id="customCheck11"
               name="remember"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
             />
             <label className="form-check-label" htmlFor="customCheck11">
               Remember Me
@@ -77,13 +112,24 @@ const LoginPage = () => {
             type="button"
             onClick={handleLogin}
           >
-            Sign in
+            {loading == true ? "Signing in..." : "Sign in"}
           </button>
         </div>
         <div className="sign-info">
           <span className="dark-color d-inline-block line-height-2">
             Don't have an account? <Link to="/register/">Sign up</Link>
           </span>
+        </div>
+        <p className="my-3" style={{ textAlign: "center" }}>
+          OR
+        </p>
+        <div className="sign-info mt-0 pt-0">
+          <GoogleOAuthProvider clientId={CLIENT_ID}>
+            <GoogleLogin
+              onSuccess={handleSuccess}
+              onError={() => console.log("Login Failed")}
+            />
+          </GoogleOAuthProvider>
         </div>
       </form>
     </div>

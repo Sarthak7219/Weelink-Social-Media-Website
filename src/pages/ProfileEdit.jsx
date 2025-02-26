@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { update_user } from "../api/endpoints";
 import { useAuth } from "../contexts/useAuth";
-import { SERVER_URL } from "../constants/constants";
 import defaultImage from "/static/images/default_profile.jpeg";
+import { SERVER_URL } from "../constants/constants";
 
 const ProfileEdit = () => {
   const { userData, setUserData } = useAuth();
-  // const storage = JSON.parse(localStorage.getItem("userData"));
   const [username, setUsername] = useState(userData ? userData.username : "");
   const [bio, setBio] = useState(userData ? userData.bio : "");
   const [email, setEmail] = useState(userData ? userData.email : "");
@@ -35,24 +34,27 @@ const ProfileEdit = () => {
         last_name: lastName,
       };
       if (previewImageURL !== null) {
-        //User has uploaded a file
         payload.profile_image = profileImage;
       }
       const data = await update_user(payload);
-      setProfileImage(data.profile_image);
+      setProfileImage(`${SERVER_URL}${data.profile_image}`);
       setPreviewImageURL(null);
 
       const updatedUserData = {
         username: data.username,
         bio: data.bio,
         email: data.email,
-        profile_image: data.profile_image,
+        profile_image: `${SERVER_URL}${data.profile_image}`,
         first_name: data.first_name,
         last_name: data.last_name,
       };
 
       setUserData(updatedUserData);
-      localStorage.setItem("userData", JSON.stringify(updatedUserData));
+      if (localStorage.getItem("userData")) {
+        localStorage.setItem("userData", JSON.stringify(updatedUserData));
+      } else if (sessionStorage.getItem("userData")) {
+        sessionStorage.setItem("userData", JSON.stringify(updatedUserData));
+      }
       alert("Details updated successfully! ");
     } catch {
       alert("Error updating details");
@@ -95,7 +97,7 @@ const ProfileEdit = () => {
                             previewImageURL
                               ? previewImageURL
                               : profileImage
-                              ? `${SERVER_URL}${profileImage}`
+                              ? profileImage
                               : defaultImage
                           }
                           alt="profile-pic"

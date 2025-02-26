@@ -1,7 +1,21 @@
-import React from "react";
-import Base from "../Base"; // Import navbar or sidebar
+import React, { useEffect } from "react";
+import Base from "../Base";
+import { useAuth } from "../contexts/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const MainLayout = ({ children }) => {
+  const navigate = useNavigate();
+  const { userData } = useAuth();
+
+  useEffect(() => {
+    if (!userData) {
+      navigate("/login");
+    }
+  }, [userData, navigate]);
+
+  if (!userData) {
+    return null;
+  }
   return (
     <div className="wrapper">
       <Base />

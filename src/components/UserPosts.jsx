@@ -145,7 +145,7 @@ const UserPosts = ({ username, isOurProfile, profileImageURL, isHome }) => {
                       cursor: "pointer",
                     }}
                   >
-                    <i class="ri-close-line"></i>
+                    <i className="ri-close-line"></i>
                   </div>
                 </div>
               )}

@@ -58,7 +58,7 @@ body {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.8;
-  color: #777d74;
+  color: #2c2d2f;
   background-color: #f8f9fa;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
@@ -12900,6 +12900,7 @@ body.sidebar-main .iq-menu-bt-sidebar .iq-menu-bt {
   margin-top: 1.875rem;
   padding-top: 1.25rem;
 }
+
 .iq-social-media {
   margin: 0;
   padding: 0;
@@ -13763,7 +13764,7 @@ body.sidebar-main .iq-menu-bt-sidebar .iq-menu-bt {
 }
 
 .main-content{
-  width: 500px !important;
+  width: 600px !important;
 }
 
 @media (max-width: 630px) {
@@ -15110,6 +15111,14 @@ body.sidebar-main .iq-menu-bt-sidebar .iq-menu-bt {
 .d-grid-template-1fr-15 {
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 }
+
+.d-grid-template-2col{
+      grid-template-columns: repeat(2, 49%);
+    justify-content: space-between;
+    max-width: 100%;
+}
+
+
 .iq-example-row .row > .col {
   padding-top: 0.75rem;
   color: #777d74;
@@ -15136,9 +15145,7 @@ body.sidebar-main .iq-menu-bt-sidebar .iq-menu-bt {
 }
 
 .create-post-btn:hover{
-  color: #50b5ff !important;
-  background-color: white !important;
-  outline: 1px solid #50b5ff;
+  background-color: #8dcfff !important;
 }
 
 .gap-3 {
@@ -18491,6 +18498,10 @@ button.close-popup {
 .bg-soft-primary {
   color: #48a3e6;
   background-color: rgba(80, 181, 255, 0.2) !important;
+}
+
+.bg-soft-primary:hover{
+  background-color: rgb(134 204 255 / 19%) !important;
 }
 a.bg-soft-primary:focus,
 a.bg-soft-primary:hover,

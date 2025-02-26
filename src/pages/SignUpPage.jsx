@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { register } from "../api/endpoints";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { CLIENT_ID } from "../constants/constants";
 
-const SignUpPage = () => {
+const SignUpPage = ({ handleGoogleLogin }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -11,6 +14,15 @@ const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleRegister();
+    }
+  };
+  const handleSuccess = async (respose) => {
+    await handleGoogleLogin(respose);
+  };
 
   const handleRegister = async () => {
     if (!username.trim()) {
@@ -65,6 +77,7 @@ const SignUpPage = () => {
             onChange={(e) => {
               setUsername(e.target.value);
             }}
+            onKeyDown={handleKeyDown}
             type="text"
             name="username"
             className="form-control mb-0"
@@ -81,6 +94,7 @@ const SignUpPage = () => {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
+            onKeyDown={handleKeyDown}
             type="email"
             name="email"
             className="form-control mb-0"
@@ -97,6 +111,7 @@ const SignUpPage = () => {
             onChange={(e) => {
               setFirstName(e.target.value);
             }}
+            onKeyDown={handleKeyDown}
             type="text"
             name="first_name"
             className="form-control mb-0"
@@ -113,6 +128,7 @@ const SignUpPage = () => {
             onChange={(e) => {
               setLastName(e.target.value);
             }}
+            onKeyDown={handleKeyDown}
             type="text"
             name="last_name"
             className="form-control mb-0"
@@ -129,6 +145,7 @@ const SignUpPage = () => {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            onKeyDown={handleKeyDown}
             type="password"
             name="password1"
             className="form-control mb-0"
@@ -145,6 +162,7 @@ const SignUpPage = () => {
             onChange={(e) => {
               setConfirmPassword(e.target.value);
             }}
+            onKeyDown={handleKeyDown}
             type="password"
             name="password2"
             className="form-control mb-0"
@@ -166,6 +184,17 @@ const SignUpPage = () => {
               Already Have Account ? <Link to="/login/">Log In</Link>
             </span>
           </div>
+        </div>
+        <p className="my-3" style={{ textAlign: "center" }}>
+          OR
+        </p>
+        <div className="sign-info mt-0 pt-0">
+          <GoogleOAuthProvider clientId={CLIENT_ID}>
+            <GoogleLogin
+              onSuccess={handleSuccess}
+              onError={() => console.log("Login Failed")}
+            />
+          </GoogleOAuthProvider>
         </div>
       </form>
     </div>

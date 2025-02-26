@@ -4,7 +4,7 @@ import { SERVER_URL } from "../constants/constants";
 import { getDisplayThreads } from "../api/endpoints";
 import defaultImg from "/static/images/default_profile.jpeg";
 
-const RightSidebar = () => {
+const RightSidebar = ({ messageBoxOpen }) => {
   const [threadList, setThreadList] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +25,9 @@ const RightSidebar = () => {
   }, []);
 
   return (
-    <div className="right-sidebar-mini right-sidebar">
+    <div
+      className={`right-sidebar-mini ${messageBoxOpen ? "" : "right-sidebar"}`}
+    >
       <div className="right-sidebar-panel p-0">
         <h4 style={{ padding: "0.938rem 1.25rem" }}>Messages</h4>
         <div className="card shadow-none">

@@ -3,14 +3,13 @@ import { fetchThreadMessages, getOrCreateThread } from "../api/endpoints";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/useAuth";
 import defaultProfileImage from "/static/images/default_profile.jpeg";
-import { SERVER_URL } from "../constants/constants";
 
 const ChatRoom = () => {
   const { userData } = useAuth();
 
   let myProfileImg = defaultProfileImage;
   if (userData.profile_image) {
-    myProfileImg = `${SERVER_URL}${userData.profile_image}`;
+    myProfileImg = userData.profile_image;
   }
   const [currentUser, setCurrentUser] = useState(userData.username);
   const { username } = useParams();
@@ -89,9 +88,16 @@ const ChatRoom = () => {
     }
   }, [threadID]);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   const sendMessage = () => {
     if (!message) {
       alert("Message cannot be empty");
+      return;
     }
     if (!ws || ws.readyState !== WebSocket.OPEN) {
       alert("Error sending message. Try refreshing page");
@@ -182,6 +188,7 @@ const ChatRoom = () => {
                   <input
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    onKeyDown={handleKeyDown}
                     type="text"
                     id="input-message"
                     className="form-control"

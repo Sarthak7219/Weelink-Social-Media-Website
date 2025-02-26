@@ -1,6 +1,35 @@
 import React from "react";
+import { useAuth } from "../contexts/useAuth";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { api } from "../api/endpoints";
 
 const AuthLayout = ({ children }) => {
+  // if (localStorage.getItem("userData") || sessionStorage.getItem("userData")) {
+  //   return <Navigate to="/" />;
+  // }
+  const navigate = useNavigate();
+  const { google_login } = useAuth();
+  const handleGoogleLogin = async (response) => {
+    try {
+      const res = await api.post(
+        "/auth/google/",
+        { access_token: response.credential },
+        { withCredentials: true }
+      );
+      if (res.data.set_username) {
+        navigate("/set-username", { state: { email: res.data.email } });
+      } else {
+        google_login(res.data, navigate);
+        return;
+      }
+    } catch (error) {
+      console.error("Google Login Error:", error);
+      alert(error.message);
+      return;
+    }
+  };
+
   return (
     <div className="wrapper">
       {" "}
@@ -45,7 +74,7 @@ const AuthLayout = ({ children }) => {
               className="col-md-6 bg-white pt-5 pt-5 pb-lg-0 pb-5"
               style={{ minHeight: "100vh" }}
             >
-              {children}
+              {React.cloneElement(children, { handleGoogleLogin })}
             </div>
           </div>
         </div>

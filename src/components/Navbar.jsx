@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchResults from "./SearchResults";
 import { search, logout } from "../api/endpoints";
 
-const Navbar = ({ username, profileImageURL }) => {
+const Navbar = ({ username, profileImageURL, handleMessageBoxOpen }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,6 +27,7 @@ const Navbar = ({ username, profileImageURL }) => {
     try {
       await logout();
       localStorage.removeItem("userData");
+      sessionStorage.removeItem("userData");
       nav("/login");
     } catch {
       alert("Error logging out");
@@ -128,7 +129,11 @@ const Navbar = ({ username, profileImageURL }) => {
               </li>
 
               <li className="nav-item dropdown">
-                <Link to="/chatroom/" className="  d-flex align-items-center">
+                <Link
+                  to="#"
+                  className="  d-flex align-items-center"
+                  onClick={handleMessageBoxOpen}
+                >
                   <i className="ri-mail-line"></i>
                 </Link>
               </li>
