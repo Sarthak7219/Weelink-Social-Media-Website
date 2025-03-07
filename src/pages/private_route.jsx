@@ -8,7 +8,9 @@ const PrivateRoute = ({ children }) => {
     return children;
   }
   if (authLoading) {
-    return <p>Loading...</p>;
+    return (
+      <p>Connecting to server...(May take time due to free tier hosting)</p>
+    );
   } else {
     return <Navigate to="/login" />;
   }
