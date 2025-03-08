@@ -117,9 +117,74 @@ const Navbar = ({ username, profileImageURL, handleMessageBoxOpen }) => {
               </div>
             )}
           </div>
-          <button className="navbar-toggler" type="button">
-            <i className="ri-menu-3-line"></i>
-          </button>
+          <div className="dropdown">
+            <button
+              className="navbar-toggler"
+              id="drop-down-arrow"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              type="button"
+            >
+              <i className="ri-menu-3-line"></i>
+            </button>
+            <div
+              className="sub-drop dropdown-menu caption-menu"
+              aria-labelledby="drop-down-arrow"
+            >
+              <div className="card shadow-none m-0">
+                <div className="card-header  bg-primary">
+                  <div className="header-title">
+                    <h5 className="mb-0 text-white">Hello {username}</h5>
+                  </div>
+                </div>
+                <div className="card-body p-0 ">
+                  <Link
+                    to={`/profile/${username}/`}
+                    className="iq-sub-card iq-bg-primary-hover"
+                  >
+                    <div className="d-flex align-items-center">
+                      <div className="rounded card-icon bg-soft-primary">
+                        <i className="ri-file-user-line"></i>
+                      </div>
+                      <div className="ms-3">
+                        <h6 className="mb-0 ">My Profile</h6>
+                        <p className="mb-0 font-size-12">
+                          View personal profile details.
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                  <Link
+                    to={`/profile/${username}/edit/`}
+                    className="iq-sub-card iq-bg-warning-hover"
+                  >
+                    <div className="d-flex align-items-center">
+                      <div className="rounded card-icon bg-soft-warning">
+                        <i className="ri-profile-line"></i>
+                      </div>
+                      <div className="ms-3">
+                        <h6 className="mb-0 ">Edit Profile</h6>
+                        <p className="mb-0 font-size-12">
+                          Modify your personal details.
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+
+                  <div className="d-inline-block w-100 text-center p-3">
+                    <button
+                      onClick={handleLogout}
+                      className="btn btn-primary iq-sign-btn"
+                      type="button"
+                    >
+                      Sign out<i className="ri-login-box-line ms-2"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav  ms-auto navbar-list">
               <li>

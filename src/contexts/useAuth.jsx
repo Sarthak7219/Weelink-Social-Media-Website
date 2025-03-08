@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
       }
       return { success: true };
     } else if (data.error) {
-      return { error: data.error };
+      return { error: "Something went wrong" };
     } else {
       return { error: "Something went wrong" };
     }

@@ -11909,7 +11909,7 @@ fieldset:disabled .btn {
 .navbar-list li .sub-drop .iq-sub-card.iq-sub-card-big {
   width: auto;
 }
-.navbar-list li .sub-drop .iq-sub-card {
+.navbar-list li .sub-drop .iq-sub-card, .dropdown .sub-drop .iq-sub-card {
   font-size: inherit;
   padding: 1rem;
   line-height: normal;
